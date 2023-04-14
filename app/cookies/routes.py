@@ -1,5 +1,13 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, current_app
 from .models import Cookie
+
+@blueprint.route('/cookies')
+def cookies():
+  page_number = request.args.get('page', 1, type=int)
+  cookies_pagination = Cookie.query.paginate(page_number, current_app.config['COOKIES_PER_PAGE'])
+  return render_template('cookies/index.html', cookies_pagination=cookies_pagination)
+
+
 
 blog_cookies = {
     "article_1": {
@@ -35,13 +43,13 @@ def blog():
     return render_template("travel.html", blogs=all_blogs)
 
 @blueprint.route("/blog/<slug>")
-def blogs(slug)
+def blogs(slug):
     blog = Cookies.query.filter_by(slug=slug).first()
     print(blog)
     if blog:
         title = blog.title
         text = blog.text
-        return render_template("cookies/cookies.html", title=title, text=text")
+        return render_template("cookies/cookies.html", title=title, text=text)
     else:
         return "Cookie does not exist"
 

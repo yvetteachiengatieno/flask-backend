@@ -1,6 +1,8 @@
 from app.extensions.database import db
+from app.extensions.database import db, CRUDMixin
 
 from datetime import datetime
+
 
 class Order(db.Model):
   id = db.Column(db.Integer, primary_key=True)

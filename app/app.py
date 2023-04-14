@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, send_file
-from . import cookies, simple_pages 
+from . import cookies, simple_pages, orders, api
 from app.extensions.databases import db, migrate
-from . import cookies, simple_pages, orders
+from app.cookies.models import Cookie
 
 app = Flask(__name__)
 app.config.from_object('app.config')
@@ -24,3 +24,10 @@ def register_blueprints(app: Flask):
 def register_extensions(app: Flask):
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
+
+    # Blueprints
+def register_blueprints(app: Flask):
+  app.register_blueprint(cookies.routes.blueprint)
+  app.register_blueprint(simple_pages.routes.blueprint)
+  app.register_blueprint(orders.routes.blueprint)
+  app.register_blueprint(api.routes.blueprint)

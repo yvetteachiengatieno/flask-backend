@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, send_file
 
-blueprint = Blueprint('simple_pages', __name__)
+blueprint = Blueprint('simple_pages', __name__, template_folder='.../templates'
 
 @blueprint.route('/')
 def index():
